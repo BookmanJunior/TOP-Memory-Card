@@ -1,3 +1,8 @@
+:root {
+  --text: #ffffff;
+  --primary-bg-color: #000000;
+}
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -60,4 +65,88 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+#root {
+  --size: 1em;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--size);
+  padding: var(--size);
+  color: var(--text);
+  background-color: var(--primary-bg-color);
+  min-height: 100vh;
+}
+
+button,
+.cards-container {
+  cursor: pointer;
+}
+
+.top-screen {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-inline: calc(var(--size) + 1em);
+  z-index: 3;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  place-items: center;
+  gap: var(--size);
+}
+
+.card-container:hover {
+  box-shadow: 0 0 10px 5px purple;
+}
+
+.card-container {
+  display: grid;
+  max-height: 300px;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.card-container > :is(img, p) {
+  grid-area: 1 / 1 / auto / auto;
+}
+
+.card-container > img {
+  /* max-height: 100%; */
+  aspect-ratio: 1;
+  object-position: 10% 0;
+  object-fit: cover;
+}
+
+.card-container > p {
+  display: grid;
+  place-items: center;
+
+  z-index: 1;
+  place-self: end center;
+  text-align: center;
+  width: 100%;
+  min-height: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal styles */
+.modal-container {
+  display: none;
+}
+
+.modal-container.active {
+  display: grid;
+
+  position: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+  place-content: center;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
 }
