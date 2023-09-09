@@ -20,3 +20,8 @@
   - Pass difficulty as argument to API fetch function when its called ?
   - Get 15 cards regardless and use slice function on response ?
 - Add loading screen while waiting for API response
+
+## General functionality
+
+- Shuffle cards on each successful click
+- Add modal on game over and game won
