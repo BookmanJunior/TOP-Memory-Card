@@ -1,6 +1,7 @@
 :root {
   --text: #ffffff;
   --primary-bg-color: #000000;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
 }
 
 /*
@@ -67,6 +68,12 @@ h6 {
   isolation: isolate;
 }
 
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--text);
+}
+
 #root {
   --size: 1em;
 
@@ -74,65 +81,104 @@ h6 {
   flex-direction: column;
   gap: var(--size);
   padding: var(--size);
-  color: var(--text);
-  background-color: var(--primary-bg-color);
   min-height: 100vh;
+  max-width: 1000px;
+  margin: auto;
+}
+
+button {
+  background-color: transparent;
+  border: none;
 }
 
 button,
-.cards-container {
+.card-container {
   cursor: pointer;
+  color: var(--text);
 }
 
-.top-screen {
+/* welcome screen styles */
+
+.welcome-screen {
+  border: 1px solid;
+  border-radius: 5px;
+  height: 300px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size);
+}
+
+.game-mode-btns {
+  gap: var(--size);
+}
+
+/* game on styles */
+
+.top-screen {
   justify-content: space-between;
   flex-wrap: wrap;
-  padding-inline: calc(var(--size) + 1em);
   z-index: 3;
+}
+
+.back-btn,
+#ArrowLeftSvg {
+  width: 40px;
+  height: 40px;
+}
+
+#ArrowLeftPath {
+  stroke: var(--text);
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   place-items: center;
   gap: var(--size);
 }
 
+.cards-container.small {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.cards-container.large {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
 .card-container:hover {
-  box-shadow: 0 0 10px 5px purple;
+  box-shadow: 0 0 10px 5px #a41ff1;
 }
 
 .card-container {
   display: grid;
-  max-height: 300px;
-  aspect-ratio: 1;
   overflow: hidden;
 }
 
-.card-container > :is(img, p) {
+.card-container > :is(img, span) {
   grid-area: 1 / 1 / auto / auto;
+  width: 100%;
 }
 
 .card-container > img {
-  /* max-height: 100%; */
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   object-position: 10% 0;
   object-fit: cover;
 }
 
-.card-container > p {
+.cards-container.large img {
+  aspect-ratio: 1.14 / 1;
+}
+
+.card-container > span {
   display: grid;
   place-items: center;
 
   z-index: 1;
   place-self: end center;
   text-align: center;
-  width: 100%;
   min-height: 50px;
   font-size: 1.2rem;
-  font-weight: 600;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Modal styles */
@@ -145,8 +191,21 @@ button,
 
   position: fixed;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
   place-content: center;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* utility classes */
+
+.font-bold {
+  font-weight: 600;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.bg-overlay {
+  background-color: var(--bg-overlay);
 }
