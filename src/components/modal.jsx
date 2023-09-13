@@ -12,7 +12,7 @@ export default function Modal({ gameState, handleClick }) {
   }, [gameState]);
 
   return (
-    <div className={`modal-container ${isActive ? "active" : ""}`}>
+    <div className={`modal-container bg-overlay ${isActive ? "active" : ""}`}>
       <div className="modal">
         {gameState === "game-over" ? <p>Game Over</p> : <p>You Win</p>}
         <button onClick={handleClick}>Play again</button>

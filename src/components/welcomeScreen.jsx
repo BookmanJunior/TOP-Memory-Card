@@ -2,7 +2,7 @@ export default function WelcomeScreen({ cb, children }) {
   return (
     <div className="welcome-screen">
       <p>Choose game mode: </p>
-      <div className="game-mode-btns">
+      <div className="game-mode-btns flex-row">
         <DifficultyButton title="Easy" onClick={() => cb("easy")} />
         <DifficultyButton title="Medium" onClick={() => cb("medium")} />
         <DifficultyButton title="Hard" onClick={() => cb("hard")} />
