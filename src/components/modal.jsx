@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Modal({ gameState, handleClick }) {
+export default function Modal({ gameState, score, handleClick }) {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -14,8 +14,13 @@ export default function Modal({ gameState, handleClick }) {
   return (
     <div className={`modal-container bg-overlay ${isActive ? "active" : ""}`}>
       <div className="modal">
-        {gameState === "game-over" ? <p>Game Over</p> : <p>You Win</p>}
-        <button onClick={handleClick}>Play again</button>
+        <p className="game-end-msg font-bold">
+          {gameState === "game-won" ? "You Win!" : "You Lose!"}
+        </p>
+        <p className="font-bold">Your final score: {score}</p>
+        <button className="hover-underline" onClick={handleClick}>
+          Play again
+        </button>
       </div>
     </div>
   );
