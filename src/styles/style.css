@@ -168,6 +168,7 @@ button,
 
 .cards-container.small {
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  margin-block: auto;
 }
 
 .cards-container.large {
