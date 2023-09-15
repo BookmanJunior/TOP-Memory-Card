@@ -28,23 +28,6 @@ export default function App() {
   const handleGameState = (state) => {
     setGameState(state);
   };
-
-  const handleCardClick = (id) => {
-    if (gameState !== "game-on") {
-      return;
-    }
-
-    if (clickedCards.includes(id)) {
-      setClickedCards([]);
-      setGameState("game-over");
-      return;
-    }
-    setClickedCards([...clickedCards, id]);
-    setScore((prev) => prev + 1);
-    const shuffledData = shuffleCards();
-    setData(shuffledData);
-  };
-
   const randomNum = () => Math.floor(Math.random() * numberOfCards);
 
   const shuffleCards = () => {
@@ -62,6 +45,24 @@ export default function App() {
 
     return shuffledData;
   };
+
+  
+  const handleCardClick = (id) => {
+    if (gameState !== "game-on") {
+      return;
+    }
+
+    if (clickedCards.includes(id)) {
+      setClickedCards([]);
+      setGameState("game-over");
+      return;
+    }
+    setClickedCards([...clickedCards, id]);
+    setScore((prev) => prev + 1);
+    const shuffledData = shuffleCards();
+    setData(shuffledData);
+  };
+
 
   useEffect(() => {
     if (score > topScore) {
@@ -188,6 +189,7 @@ export default function App() {
                 handleGameState("welcome-screen");
                 setScore(0);
                 setData([]);
+                setClickedCards([]);
               }}
             >
               <ArrowLeft />
