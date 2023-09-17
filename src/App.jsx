@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import WelcomeScreen from "./components/welcomeScreen";
 import Card from "./components/card";
 import Modal from "./components/modal";
-import { ReactComponent as ArrowLeft } from "./assets/arrow-left.svg";
+import TopScreen from "./components/topScreen";
 
 export default function App() {
   const [gameState, setGameState] = useState("welcome-screen");
@@ -46,7 +46,6 @@ export default function App() {
     return shuffledData;
   };
 
-  
   const handleCardClick = (id) => {
     if (gameState !== "game-on") {
       return;
@@ -63,6 +62,27 @@ export default function App() {
     setData(shuffledData);
   };
 
+  const reset = () => {
+    setScore(0);
+    setData([]);
+    setClickedCards([]);
+  };
+
+  const handleQuit = () => {
+    handleGameState("welcome-screen");
+    reset();
+  };
+
+  const handleKeepPlying = () => {
+    if (gameDifficulty === "easy") {
+      setGameDifficulty("medium");
+    } else {
+      setGameDifficulty("hard");
+    }
+
+    setGameState("loading");
+    reset();
+  };
 
   useEffect(() => {
     if (score > topScore) {
@@ -162,14 +182,6 @@ export default function App() {
 
   return (
     <>
-      <Modal
-        gameState={gameState}
-        score={score}
-        handleClick={() => {
-          handleGameState("loading");
-          setScore(0);
-        }}
-      />
       {isWelcomeScreen && (
         <WelcomeScreen cb={handleGameMode} gameDifficulty={gameDifficulty}>
           <button
@@ -182,23 +194,11 @@ export default function App() {
       )}
       {!isWelcomeScreen && (
         <>
-          <div className="top-screen flex-row">
-            <button
-              className="back-btn"
-              onClick={() => {
-                handleGameState("welcome-screen");
-                setScore(0);
-                setData([]);
-                setClickedCards([]);
-              }}
-            >
-              <ArrowLeft />
-            </button>
-            <div className="score-container">
-              <p className="current-score">Current Score: {score}</p>
-              <p className="top-score">Top Score: {topScore}</p>
-            </div>
-          </div>
+          <TopScreen
+            handleQuit={handleQuit}
+            score={score}
+            topScore={topScore}
+          />
           <div className={`cards-container ${cardsSize}`}>
             {data.map((item) => (
               <Card key={item.id} data={item} handleClick={handleCardClick} />
@@ -206,6 +206,15 @@ export default function App() {
           </div>
         </>
       )}
+      <Modal
+        gameState={gameState}
+        score={score}
+        handleRestart={() => {
+          handleGameState("loading");
+          reset();
+        }}
+        handleKeepPlaying={handleKeepPlying}
+      />
     </>
   );
 }
