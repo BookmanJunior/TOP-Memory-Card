@@ -77,8 +77,6 @@ body {
 #root {
   --size: 1em;
 
-  display: flex;
-  flex-direction: column;
   gap: var(--size);
   padding: var(--size);
   min-height: 100vh;
@@ -103,8 +101,6 @@ button,
   border: 1px solid;
   border-radius: 5px;
   height: 300px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--size);
@@ -262,4 +258,14 @@ button,
 
 .hover-underline.active::after {
   transform: scaleX(1);
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.block {
+  display: block;
+  margin-inline: auto;
 }
