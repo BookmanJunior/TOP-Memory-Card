@@ -159,9 +159,8 @@ export default function App() {
         const parsedData = jsonData.data.Page.media;
         setData(parsedData);
         setGameState("game-on");
-        return jsonData;
       } catch (error) {
-        return console.log(error);
+        setGameState("error");
       }
     }
     if (isLoading) {
