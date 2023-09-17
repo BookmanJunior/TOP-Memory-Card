@@ -76,7 +76,7 @@ export default function App() {
   const handleKeepPlying = () => {
     if (gameDifficulty === "easy") {
       setGameDifficulty("medium");
-    } else {
+    } else if (gameDifficulty === "medium") {
       setGameDifficulty("hard");
     }
 
@@ -213,6 +213,7 @@ export default function App() {
           reset();
         }}
         handleKeepPlaying={handleKeepPlying}
+        gameDifficulty={gameDifficulty}
       />
     </>
   );
