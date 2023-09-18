@@ -24,5 +24,6 @@ module.exports = {
     "import/no-unresolved": "off",
     "no-use-before-define": "off",
     "no-plusplus": "off",
+    "no-nested-ternary": "off",
   },
 };
