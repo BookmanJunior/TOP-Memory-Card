@@ -1,6 +1,6 @@
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 
-export default function TopScreen({ handleQuit, score, topScore }) {
+export default function Header({ handleQuit, score, topScore }) {
   return (
     <div className="top-screen flex-row">
       <button className="back-btn" onClick={handleQuit}>
