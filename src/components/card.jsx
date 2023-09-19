@@ -41,7 +41,8 @@ export default function Cards({
         .then(() => setGameState("game-on"))
         .catch(() => setGameState("error"));
     }
-  }, [gameState, numberOfCards, setGameState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState, numberOfCards]);
 
   if (gameState === "loading") {
     return <LoadingScreen />;
