@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WelcomeScreen from "./components/welcomeScreen";
 import Modal from "./components/modal";
 import Cards from "./components/card";
@@ -13,6 +13,8 @@ export default function App() {
 
   const isWelcomeScreen = gameState === "welcome-screen";
   const isLoading = gameState === "loading";
+  const numberOfCards =
+    gameDifficulty === "easy" ? 6 : gameDifficulty === "medium" ? 9 : 12;
 
   const handleCardClick = (id) => {
     if (gameState !== "game-on") {
@@ -24,8 +26,19 @@ export default function App() {
       setGameState("game-over");
       return;
     }
+
+    const newScore = score + 1;
     setClickedCards([...clickedCards, id]);
-    setScore((prev) => prev + 1);
+    setScore(newScore);
+
+    if (newScore > topScore) {
+      setTopScore(newScore);
+    }
+
+    if (newScore >= numberOfCards) {
+      setGameState("game-won");
+      setClickedCards([]);
+    }
   };
 
   const reset = () => {
@@ -48,21 +61,6 @@ export default function App() {
     setGameState("loading");
     reset();
   };
-
-  useEffect(() => {
-    if (score > topScore) {
-      setTopScore(score);
-    }
-  }, [score, topScore]);
-
-  useEffect(() => {
-    const numberOfCards =
-      gameDifficulty === "easy" ? 6 : gameDifficulty === "medium" ? 9 : 12;
-    if (score >= numberOfCards) {
-      setGameState("game-won");
-      setClickedCards([]);
-    }
-  }, [score, gameDifficulty]);
 
   if (isWelcomeScreen) {
     return (
