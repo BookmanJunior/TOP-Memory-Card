@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 export default function Modal({
   gameState,
   score,
@@ -7,19 +5,10 @@ export default function Modal({
   handleKeepPlaying,
   gameDifficulty,
 }) {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    if (
-      gameState === "game-won" ||
-      gameState === "game-over" ||
-      gameState === "error"
-    ) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  }, [gameState]);
+  const isActive =
+    gameState === "game-won" ||
+    gameState === "game-over" ||
+    gameState === "error";
 
   if (gameState === "error") {
     return (
