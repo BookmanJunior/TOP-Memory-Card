@@ -2,7 +2,7 @@ import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 
 export default function Header({ handleQuit, score, topScore }) {
   return (
-    <div className="top-screen flex-row">
+    <div className="header flex-row">
       <button className="back-btn" onClick={handleQuit}>
         <ArrowLeft />
       </button>
