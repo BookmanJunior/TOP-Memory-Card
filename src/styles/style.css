@@ -172,7 +172,7 @@ button,
 }
 
 .card-container:hover {
-  box-shadow: 0 0 10px 5px #a41ff1;
+  filter: drop-shadow(0 0 1.2em #a41ff1);
 }
 
 .card-container {
