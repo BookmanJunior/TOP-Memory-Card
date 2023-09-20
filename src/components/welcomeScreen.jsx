@@ -1,7 +1,7 @@
 export default function WelcomeScreen({ cb, gameDifficulty, children }) {
   return (
     <div className="welcome-screen flex-column">
-      <p>Choose game mode: </p>
+      <p>Choose game difficulty: </p>
       <div className="game-mode-btns flex-row">
         <DifficultyButton
           gameDifficulty={gameDifficulty}
