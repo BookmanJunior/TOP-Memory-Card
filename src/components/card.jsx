@@ -86,11 +86,14 @@ function LoadingScreen() {
   );
 }
 
-const randomScore = () => {
-  const scores = [75, 80, 81, 82, 83, 84, 85, 87, 88, 89];
-  const randomScoreNum = Math.floor(Math.random() * scores.length);
-  return scores[randomScoreNum];
-};
+// anilist api lacks randomize, generate random score between desired min and maxScore score
+function getRandomScore() {
+  const minScore = 74;
+  const maxScore = 89;
+
+  return Math.floor(Math.random() * (maxScore - minScore + 1)) + minScore;
+}
+
 async function getData(numOfItems) {
   // Here we define our query as a multi-line string
   // Storing it in a separate .graphql/.gql file is also possible
@@ -121,7 +124,7 @@ Page (page: $page, perPage: $perPage) {
 
   // Define our query variables and values that will be used in the query request
   const variables = {
-    averageScore_greater: randomScore(),
+    averageScore_greater: getRandomScore(),
     page: 1,
     perPage: numOfItems,
   };
