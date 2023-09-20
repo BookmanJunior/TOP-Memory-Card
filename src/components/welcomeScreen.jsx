@@ -25,11 +25,10 @@ export default function WelcomeScreen({ cb, gameDifficulty, children }) {
 }
 
 function DifficultyButton({ title, onClick, gameDifficulty }) {
+  const isActive = gameDifficulty === title.toLowerCase();
   return (
     <button
-      className={`font-bold hover-underline ${
-        gameDifficulty === title.toLowerCase() ? "active" : ""
-      }`}
+      className={`font-bold hover-underline ${isActive ? "active" : ""}`}
       onClick={onClick}
     >
       {title}
