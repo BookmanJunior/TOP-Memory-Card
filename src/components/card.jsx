@@ -15,23 +15,34 @@ export default function Cards({
       ? "large"
       : "small";
 
-  const randomNum = () => Math.floor(Math.random() * numberOfCards);
+  // my solution to shuffle cards
+  // const randomNum = () => Math.floor(Math.random() * numberOfCards);
 
-  const shuffleCards = () => {
-    const shuffledData = [];
-    const doesNumExist = [];
+  // const shuffleCards = () => {
+  //   const shuffledData = [];
+  //   const doesNumExist = [];
 
-    for (let index = 0; index < numberOfCards; index++) {
-      let num = randomNum();
-      while (doesNumExist.includes(num)) {
-        num = randomNum();
-      }
-      doesNumExist.push(num);
-      shuffledData.push(data[num]);
+  //   for (let index = 0; index < numberOfCards; index++) {
+  //     let num = randomNum();
+  //     while (doesNumExist.includes(num)) {
+  //       num = randomNum();
+  //     }
+  //     doesNumExist.push(num);
+  //     shuffledData.push(data[num]);
+  //   }
+
+  //   return shuffledData;
+  // };
+
+  // Durstenfeld shuffle algorithm
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      // eslint-disable-next-line no-param-reassign
+      [array[i], array[j]] = [array[j], array[i]];
     }
-
-    return shuffledData;
-  };
+    return array;
+  }
 
   useEffect(() => {
     const isLoading = gameState === "loading";
@@ -56,7 +67,7 @@ export default function Cards({
           data={item}
           handleClick={() => {
             handleClick(item.id);
-            setData(shuffleCards());
+            setData(shuffleArray([...data]));
           }}
         />
       ))}
