@@ -104,6 +104,7 @@ button,
   align-items: center;
   justify-content: center;
   gap: var(--size);
+  margin-block: auto;
 }
 
 .game-mode-btns {
@@ -163,7 +164,7 @@ button,
 }
 
 .cards-container.small {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   margin-block: auto;
 }
 
