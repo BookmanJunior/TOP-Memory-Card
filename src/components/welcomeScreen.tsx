@@ -1,4 +1,22 @@
-export default function WelcomeScreen({ cb, gameDifficulty, children }) {
+import { gameDifficultyOptions } from "../gameOptions.types";
+
+type WelcomeScreenProps = {
+  cb: (difficulty: gameDifficultyOptions) => void;
+  gameDifficulty: gameDifficultyOptions;
+  children: JSX.Element | JSX.Element[];
+};
+
+type DifficultyButtonProps = {
+  title: "Easy" | "Medium" | "Hard";
+  onClick: () => void;
+  gameDifficulty: gameDifficultyOptions;
+};
+
+export default function WelcomeScreen({
+  cb,
+  gameDifficulty,
+  children,
+}: WelcomeScreenProps) {
   return (
     <div className="welcome-screen flex-column">
       <p>Choose game difficulty: </p>
@@ -24,7 +42,11 @@ export default function WelcomeScreen({ cb, gameDifficulty, children }) {
   );
 }
 
-function DifficultyButton({ title, onClick, gameDifficulty }) {
+function DifficultyButton({
+  title,
+  onClick,
+  gameDifficulty,
+}: DifficultyButtonProps) {
   const isActive = gameDifficulty === title.toLowerCase();
   return (
     <button

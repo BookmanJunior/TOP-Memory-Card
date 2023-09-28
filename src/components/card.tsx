@@ -1,53 +1,54 @@
 import { useEffect, useState } from "react";
+import { gameStateOptions } from "../gameOptions.types";
+
+type CardsProps = {
+  gameDifficulty: string;
+  handleClick: (id: number) => void;
+  setGameState: (arg0: gameStateOptions) => void;
+  gameState: string;
+};
+
+type CardProps = {
+  data: Data;
+  handleClick: (id: number) => void;
+};
+
+type Data = {
+  id: number;
+  title: {
+    romaji: string;
+    english: string;
+  };
+  coverImage: {
+    extraLarge: string;
+    large: string;
+  };
+};
 
 export default function Cards({
   gameDifficulty,
   handleClick,
   setGameState,
   gameState,
-}) {
-  const [data, setData] = useState([]);
+}: CardsProps) {
+  const [data, setData] = useState<Data[]>([]);
 
-  const numberOfCards =
-    gameDifficulty === "easy" ? 6 : gameDifficulty === "medium" ? 9 : 12;
-  const cardsSize =
-    gameDifficulty === "easy" || gameDifficulty === "medium"
-      ? "large"
-      : "small";
+  const numberOfCards = {
+    easy: 6,
+    medium: 9,
+    hard: 15,
+  } as const;
 
-  // my solution to shuffle cards
-  // const randomNum = () => Math.floor(Math.random() * numberOfCards);
-
-  // const shuffleCards = () => {
-  //   const shuffledData = [];
-  //   const doesNumExist = [];
-
-  //   for (let index = 0; index < numberOfCards; index++) {
-  //     let num = randomNum();
-  //     while (doesNumExist.includes(num)) {
-  //       num = randomNum();
-  //     }
-  //     doesNumExist.push(num);
-  //     shuffledData.push(data[num]);
-  //   }
-
-  //   return shuffledData;
-  // };
-
-  // Durstenfeld shuffle algorithm
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      // eslint-disable-next-line no-param-reassign
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
+  const cardsSize = {
+    easy: "large",
+    medium: "large",
+    hard: "small",
+  } as const;
 
   useEffect(() => {
     const isLoading = gameState === "loading";
     if (isLoading) {
-      getData(numberOfCards)
+      getData(numberOfCards[gameDifficulty as keyof typeof cardsSize])
         .then((apiData) => setData(apiData))
         .then(() => setGameState("game-on"))
         .catch(() => setGameState("error"));
@@ -60,7 +61,11 @@ export default function Cards({
   }
 
   return (
-    <div className={`cards-container ${cardsSize}`}>
+    <div
+      className={`cards-container ${
+        cardsSize[gameDifficulty as keyof typeof cardsSize]
+      }`}
+    >
       {data.map((item) => (
         <Card
           key={item.id}
@@ -75,7 +80,7 @@ export default function Cards({
   );
 }
 
-function Card({ data, handleClick }) {
+function Card({ data, handleClick }: CardProps) {
   const cardTitle = data.title?.english ?? data.title?.romaji;
   const cardImg = data.coverImage?.extraLarge ?? data.coverImage.large;
   return (
@@ -97,6 +102,35 @@ function LoadingScreen() {
   );
 }
 
+// my solution to shuffle cards
+// const randomNum = () => Math.floor(Math.random() * numberOfCards);
+
+// const shuffleCards = () => {
+//   const shuffledData = [];
+//   const doesNumExist = [];
+
+//   for (let index = 0; index < numberOfCards; index++) {
+//     let num = randomNum();
+//     while (doesNumExist.includes(num)) {
+//       num = randomNum();
+//     }
+//     doesNumExist.push(num);
+//     shuffledData.push(data[num]);
+//   }
+
+//   return shuffledData;
+// };
+
+// Durstenfeld shuffle algorithm
+function shuffleArray(array: Data[]): Data[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    // eslint-disable-next-line no-param-reassign
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 // anilist api lacks randomize, generate random score between desired min and maxScore score
 function getRandomScore() {
   const minScore = 74;
@@ -105,7 +139,7 @@ function getRandomScore() {
   return Math.floor(Math.random() * (maxScore - minScore + 1)) + minScore;
 }
 
-async function getData(numOfItems) {
+async function getData(numOfItems: number) {
   // Here we define our query as a multi-line string
   // Storing it in a separate .graphql/.gql file is also possible
   const query = `

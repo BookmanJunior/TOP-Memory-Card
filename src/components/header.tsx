@@ -1,6 +1,12 @@
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 
-export default function Header({ handleQuit, score, topScore }) {
+type HeaderProps = {
+  handleQuit: () => void;
+  score: number;
+  topScore: number;
+};
+
+export default function Header({ handleQuit, score, topScore }: HeaderProps) {
   return (
     <div className="header flex-row">
       <button className="back-btn" onClick={handleQuit}>
