@@ -80,7 +80,7 @@ body {
   gap: var(--size);
   padding: var(--size);
   min-height: 100vh;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
 }
 
@@ -159,13 +159,12 @@ button,
 
 .cards-container {
   display: grid;
-  place-items: center;
   gap: var(--size);
+  margin-block: auto;
 }
 
 .cards-container.small {
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  margin-block: auto;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .cards-container.large {
