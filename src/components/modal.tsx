@@ -1,11 +1,18 @@
 import { gameDifficultyOptions, gameStateOptions } from "../gameOptions.types";
 
+type handleRestart = () => void;
+
+type ErrorModalProps = {
+  handleRestart: handleRestart;
+  handleExit: () => void;
+};
+
 type ModalProps = {
   gameState: gameStateOptions;
   gameDifficulty: gameDifficultyOptions;
   score: number;
-  handleRestart: () => void;
   handleKeepPlaying: () => void;
+  handleRestart: handleRestart;
 };
 
 type ModalContainerProps = {
@@ -17,26 +24,14 @@ type ModalButtonProps = {
   children: string;
 } & Omit<React.ComponentProps<"button">, "children">;
 
-export default function Modal({
+export function Modal({
   gameState,
   gameDifficulty,
   score,
   handleRestart,
   handleKeepPlaying,
 }: ModalProps) {
-  const isActive =
-    gameState === "game-won" ||
-    gameState === "game-over" ||
-    gameState === "error";
-
-  if (gameState === "error") {
-    return (
-      <ModalContainer isActive={isActive}>
-        <p>OOPS! Something went wrong</p>
-        <ModalButton onClick={handleRestart}>Try Again</ModalButton>
-      </ModalContainer>
-    );
-  }
+  const isActive = gameState === "game-won" || gameState === "game-over";
 
   return (
     <ModalContainer isActive={isActive}>
@@ -50,6 +45,16 @@ export default function Modal({
         )}
         <ModalButton onClick={handleRestart}>Play Again</ModalButton>
       </div>
+    </ModalContainer>
+  );
+}
+
+export function ErrorModal({ handleRestart, handleExit }: ErrorModalProps) {
+  return (
+    <ModalContainer isActive={true}>
+      <p>OOPS! Something went wrong</p>
+      <ModalButton onClick={handleRestart}>Try Again</ModalButton>
+      <ModalButton onClick={handleExit}>Exit</ModalButton>
     </ModalContainer>
   );
 }
