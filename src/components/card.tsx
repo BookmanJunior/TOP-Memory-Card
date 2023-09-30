@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Data, gameDifficultyOptions } from "../gameOptions.types";
 
 type handleClick = (id: number) => void;
@@ -24,10 +25,22 @@ export default function Cards({
   gameDifficulty,
   handleClick,
 }: CardsProps) {
+  const [clickAnimation, setClickedAnimation] = useState("");
+
   return (
-    <div className={`cards-container ${cardsSize[gameDifficulty]}`}>
+    <div
+      className={`cards-container ${cardsSize[gameDifficulty]} ${clickAnimation}`}
+      onAnimationEnd={() => setClickedAnimation("")}
+    >
       {data.map((item) => (
-        <Card key={item.id} data={item} handleClick={handleClick} />
+        <Card
+          key={item.id}
+          data={item}
+          handleClick={(id) => {
+            handleClick(id);
+            setClickedAnimation("clicked");
+          }}
+        />
       ))}
     </div>
   );
@@ -38,7 +51,7 @@ function Card({ data, handleClick }: CardProps) {
   const cardImg = data.coverImage?.extraLarge ?? data.coverImage.large;
   return (
     <div className={`card-container`} onClick={() => handleClick(data.id)}>
-      <img src={cardImg} alt={cardTitle} />
+      <img src={cardImg} alt={cardTitle} draggable="false" />
       <span className="font-bold bg-overlay">{cardTitle}</span>
     </div>
   );
