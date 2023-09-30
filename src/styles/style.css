@@ -105,6 +105,7 @@ button,
   justify-content: center;
   gap: var(--size);
   margin-block: auto;
+  animation: entrance 300ms forwards;
 }
 
 .game-mode-btns {
@@ -161,6 +162,7 @@ button,
   display: grid;
   gap: var(--size);
   margin-block: auto;
+  animation: entrance 400ms;
 }
 
 .cards-container.small {
@@ -177,7 +179,10 @@ button,
 
 .card-container {
   display: grid;
-  overflow: hidden;
+}
+
+.cards-container.clicked > div {
+  animation: entrance 400ms;
 }
 
 .card-container > :is(img, span) {
@@ -220,6 +225,10 @@ button,
   display: grid;
   place-content: center;
   z-index: 2;
+}
+
+.modal {
+  animation: entrance 200ms;
 }
 
 .game-end-msg {
@@ -268,4 +277,15 @@ button,
 .block {
   display: block;
   margin-inline: auto;
+}
+
+@keyframes entrance {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }
