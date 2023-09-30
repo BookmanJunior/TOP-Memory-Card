@@ -28,7 +28,29 @@ export default function APIData({
 
   useEffect(() => {
     if (gameState === "loading") {
-      getData(numberOfCards[gameDifficulty])
+      const firstScore = getRandomScore(74, 89);
+      const amountOfCards = numberOfCards[gameDifficulty];
+      const extraCards = amountOfCards === 12 ? 3 : 6;
+
+      // score of 89 doesn't return enough cards for medium and hard mode. Make second request to get extra cards
+      if (firstScore >= 89) {
+        const secondScore = getRandomScore(74, 88);
+
+        const firstRequest = getData(amountOfCards, firstScore);
+        const secondRequest = getData(extraCards, secondScore);
+
+        Promise.all([firstRequest, secondRequest])
+          .then((res) => setData(res.flat()))
+          .then(() => setGameState("game-on"))
+          .catch(() => {
+            setError(true);
+            setGameState("reloading");
+          });
+
+        return;
+      }
+
+      getData(amountOfCards, firstScore)
         .then((res) => setData(res))
         .then(() => setGameState("game-on"))
         .catch(() => {
@@ -42,14 +64,11 @@ export default function APIData({
 }
 
 // anilist api lacks randomize, generate random score between desired min and maxScore score
-function getRandomScore() {
-  const minScore = 74;
-  const maxScore = 89;
-
+function getRandomScore(minScore: number, maxScore: number): number {
   return Math.floor(Math.random() * (maxScore - minScore + 1)) + minScore;
 }
 
-async function getData(numOfItems: number) {
+async function getData(numOfItems: number, score: number) {
   // Here we define our query as a multi-line string
   // Storing it in a separate .graphql/.gql file is also possible
   const query = `
@@ -79,7 +98,7 @@ Page (page: $page, perPage: $perPage) {
 
   // Define our query variables and values that will be used in the query request
   const variables = {
-    averageScore_greater: getRandomScore(),
+    averageScore_greater: score,
     page: 1,
     perPage: numOfItems,
   };
@@ -101,8 +120,7 @@ Page (page: $page, perPage: $perPage) {
   try {
     const response = await fetch(url, options);
     const jsonData = await response.json();
-    const parsedData = jsonData.data.Page.media;
-    return parsedData;
+    return jsonData.data.Page.media;
   } catch (e) {
     throw new Error();
   }
