@@ -16,6 +16,7 @@ const numberOfCards = {
   easy: 8,
   medium: 12,
   hard: 15,
+  master: 24,
 } as const;
 
 export default function APIData({
@@ -28,13 +29,15 @@ export default function APIData({
 
   useEffect(() => {
     if (gameState === "loading") {
-      const firstScore = getRandomScore(74, 89);
+      // const firstScore = getRandomScore(74, 89);
+      const firstScore = 89;
       const amountOfCards = numberOfCards[gameDifficulty];
-      const extraCards = amountOfCards === 12 ? 3 : 6;
 
       // score of 89 doesn't return enough cards for medium and hard mode. Make second request to get extra cards
       if (firstScore >= 89) {
         const secondScore = getRandomScore(74, 88);
+        const extraCards =
+          amountOfCards === 12 ? 3 : amountOfCards === 15 ? 6 : 15;
 
         const firstRequest = getData(amountOfCards, firstScore);
         const secondRequest = getData(extraCards, secondScore);
@@ -72,7 +75,7 @@ async function getData(numOfItems: number, score: number) {
   // Here we define our query as a multi-line string
   // Storing it in a separate .graphql/.gql file is also possible
   const query = `
-query ($page: Int, $perPage: Int, $averageScore_greater: Int) {
+query ($page: Int, $perPage: Int, $averageScore_greater: Int, $isAdult: Boolean) {
 Page (page: $page, perPage: $perPage) {
   pageInfo {
     total
@@ -81,7 +84,7 @@ Page (page: $page, perPage: $perPage) {
     hasNextPage
     perPage
   }
-  media (averageScore_greater: $averageScore_greater, type: MANGA) {
+  media (averageScore_greater: $averageScore_greater, isAdult: $isAdult, type: MANGA) {
     id
     title {
       romaji
@@ -99,6 +102,7 @@ Page (page: $page, perPage: $perPage) {
   // Define our query variables and values that will be used in the query request
   const variables = {
     averageScore_greater: score,
+    isAdult: false,
     page: 1,
     perPage: numOfItems,
   };

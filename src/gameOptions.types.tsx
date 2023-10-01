@@ -6,7 +6,7 @@ export type gameStateOptions =
   | "game-won"
   | "game-on";
 
-export type gameDifficultyOptions = "easy" | "medium" | "hard";
+export type gameDifficultyOptions = "easy" | "medium" | "hard" | "master";
 
 export type Data = {
   id: number;

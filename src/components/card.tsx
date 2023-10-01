@@ -18,6 +18,7 @@ const cardsSize = {
   easy: "large",
   medium: "large",
   hard: "small",
+  master: "extra-small",
 } as const;
 
 export default function Cards({

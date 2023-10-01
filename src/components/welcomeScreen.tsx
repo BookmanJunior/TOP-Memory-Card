@@ -7,10 +7,17 @@ type WelcomeScreenProps = {
 };
 
 type DifficultyButtonProps = {
-  title: "Easy" | "Medium" | "Hard";
+  title: gameDifficultyOptions;
   onClick: () => void;
   gameDifficulty: gameDifficultyOptions;
 };
+
+const difficultyButtons: gameDifficultyOptions[] = [
+  "easy",
+  "medium",
+  "hard",
+  "master",
+];
 
 export default function WelcomeScreen({
   cb,
@@ -21,21 +28,14 @@ export default function WelcomeScreen({
     <div className="welcome-screen flex-column">
       <p>Choose game difficulty: </p>
       <div className="game-mode-btns flex-row">
-        <DifficultyButton
-          gameDifficulty={gameDifficulty}
-          title="Easy"
-          onClick={() => cb("easy")}
-        />
-        <DifficultyButton
-          gameDifficulty={gameDifficulty}
-          title="Medium"
-          onClick={() => cb("medium")}
-        />
-        <DifficultyButton
-          gameDifficulty={gameDifficulty}
-          title="Hard"
-          onClick={() => cb("hard")}
-        />
+        {difficultyButtons.map((button) => (
+          <DifficultyButton
+            key={button}
+            title={button}
+            gameDifficulty={gameDifficulty}
+            onClick={() => cb(button)}
+          />
+        ))}
       </div>
       {children}
     </div>
@@ -50,7 +50,9 @@ function DifficultyButton({
   const isActive = gameDifficulty === title.toLowerCase();
   return (
     <button
-      className={`font-bold hover-underline ${isActive ? "active" : ""}`}
+      className={`font-bold hover-underline diff-btn ${
+        isActive ? "active" : ""
+      }`}
       onClick={onClick}
     >
       {title}
