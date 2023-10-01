@@ -29,8 +29,7 @@ export default function APIData({
 
   useEffect(() => {
     if (gameState === "loading") {
-      // const firstScore = getRandomScore(74, 89);
-      const firstScore = 89;
+      const firstScore = getRandomScore(74, 89);
       const amountOfCards = numberOfCards[gameDifficulty];
 
       // score of 89 doesn't return enough cards for medium and hard mode. Make second request to get extra cards
