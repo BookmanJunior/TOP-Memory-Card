@@ -112,6 +112,10 @@ button,
   gap: var(--size);
 }
 
+.diff-btn {
+  text-transform: capitalize;
+}
+
 /* loading screen styles */
 
 .loading-screen {
@@ -165,6 +169,10 @@ button,
   animation: entrance 400ms;
 }
 
+.cards-container.extra-small {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .cards-container.small {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
@@ -208,6 +216,9 @@ button,
   place-self: end center;
   text-align: center;
   min-height: 50px;
+  max-height: 120px;
+  overflow: hidden;
+  white-space: break-spaces;
   font-size: 1.2rem;
 }
 
