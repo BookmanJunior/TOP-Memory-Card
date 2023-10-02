@@ -25,7 +25,7 @@ export default function WelcomeScreen({
   children,
 }: WelcomeScreenProps) {
   return (
-    <div className="welcome-screen flex-column">
+    <div className="welcome-screen flex-column box">
       <p>Choose game difficulty: </p>
       <div className="game-mode-btns flex-row">
         {difficultyButtons.map((button) => (

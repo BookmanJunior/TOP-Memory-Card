@@ -62,7 +62,7 @@ export function ErrorModal({ handleRestart, handleExit }: ErrorModalProps) {
 function ModalContainer({ children, isActive }: ModalContainerProps) {
   return (
     <div className={`modal-container bg-overlay ${isActive ? "active" : ""}`}>
-      <div className="modal">{children}</div>
+      <div className="modal box flex-column">{children}</div>
     </div>
   );
 }
