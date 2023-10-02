@@ -6,7 +6,7 @@
 A memory card game project to practice using useState, useEffect to fetch, manage and use data from external APIs.
 
 ## Live Demo
-[Demo](https://top-memory-card-b5eru3g3c-bookmanjunior.vercel.app/)
+[Demo](https://top-memory-card-ht2pygq8k-bookmanjunior.vercel.app/)
 
 ## What I learned
 - Fetch data from external API on component's mount
@@ -19,7 +19,5 @@ A memory card game project to practice using useState, useEffect to fetch, manag
 - 3 different game difficulties
 - Option to move on to harder game difficulty on successful game completion
 - Keeping track of player’s highest score
-
-## Things that could be improved/added 
-- Animations
-- Better separation of concerns
+- Store top score in local storage
+- Instructions on the first load of the game that persists between reloads
