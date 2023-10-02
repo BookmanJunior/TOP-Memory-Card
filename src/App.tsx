@@ -136,6 +136,8 @@ export default function App() {
       setGameDifficulty("medium");
     } else if (gameDifficulty === "medium") {
       setGameDifficulty("hard");
+    } else if (gameDifficulty === "hard") {
+      setGameDifficulty("master");
     }
 
     setGameState("loading");

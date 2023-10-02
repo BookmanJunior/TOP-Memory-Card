@@ -40,7 +40,7 @@ export function Modal({
       </p>
       <p className="font-bold">Your final score: {score}</p>
       <div className="modal-buttons">
-        {gameState === "game-won" && gameDifficulty !== "hard" && (
+        {gameState === "game-won" && gameDifficulty !== "master" && (
           <ModalButton onClick={handleKeepPlaying}>Keep Playing</ModalButton>
         )}
         <ModalButton onClick={handleRestart}>Play Again</ModalButton>
