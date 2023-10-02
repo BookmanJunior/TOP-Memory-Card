@@ -9,6 +9,7 @@ import { Modal, ErrorModal } from "./components/modal";
 import Cards from "./components/card";
 import Header from "./components/header";
 import APIData from "./components/getData";
+import Instructions from "./components/instructions";
 
 export default function App() {
   const [data, setData] = useState<Data[]>([]);
@@ -19,6 +20,9 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [topScore, setTopScore] = useState(0);
   const [clickedCards, setClickedCards] = useState<number[]>([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(
+    (localStorage.getItem("isFirstLoad") && false) ?? true
+  );
   const { error, setError } = APIData({
     gameState,
     setGameState,
@@ -68,6 +72,9 @@ export default function App() {
           handleClick={handleCardClick}
         />
       </>
+      {isFirstLoad && (
+        <Instructions isActive={isFirstLoad} setIsActive={setIsFirstLoad} />
+      )}
       <Modal
         gameState={gameState}
         score={score}
