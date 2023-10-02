@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   gameStateOptions,
   gameDifficultyOptions,
@@ -12,16 +12,21 @@ import APIData from "./components/getData";
 import Instructions from "./components/instructions";
 
 export default function App() {
+  const isLocalTopScore = localStorage.getItem("topScore");
+  const isLocalFirstLoad = localStorage.getItem("isFirstLoad");
+
   const [data, setData] = useState<Data[]>([]);
   const [gameState, setGameState] =
     useState<gameStateOptions>("welcome-screen");
   const [gameDifficulty, setGameDifficulty] =
     useState<gameDifficultyOptions>("easy");
   const [score, setScore] = useState(0);
-  const [topScore, setTopScore] = useState(0);
+  const [topScore, setTopScore] = useState<number>(
+    (isLocalTopScore && JSON.parse(isLocalTopScore)) ?? 0
+  );
   const [clickedCards, setClickedCards] = useState<number[]>([]);
   const [isFirstLoad, setIsFirstLoad] = useState(
-    (localStorage.getItem("isFirstLoad") && false) ?? true
+    (isLocalFirstLoad && JSON.parse(isLocalFirstLoad)) ?? true
   );
   const { error, setError } = APIData({
     gameState,
@@ -29,6 +34,12 @@ export default function App() {
     setData,
     gameDifficulty,
   });
+
+  useEffect(() => {
+    if (score > topScore) {
+      localStorage.setItem("topScore", "" + score);
+    }
+  }, [score, topScore]);
 
   const isWelcomeScreen = gameState === "welcome-screen";
   const isGameLoading = gameState === "loading";
@@ -96,6 +107,11 @@ export default function App() {
     if (clickedCards.includes(id)) {
       setClickedCards([]);
       setGameState("game-over");
+
+      if (score > topScore) {
+        setTopScore(score);
+      }
+
       return;
     }
 
@@ -103,10 +119,6 @@ export default function App() {
     setClickedCards([...clickedCards, id]);
     setScore(newScore);
     setData(shuffleArray([...data]));
-
-    if (newScore > topScore) {
-      setTopScore(newScore);
-    }
 
     if (newScore >= data.length) {
       setGameState("game-won");
