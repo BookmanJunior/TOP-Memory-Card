@@ -2,11 +2,17 @@
 
 *Revised*
 
+
+
+https://github.com/BookmanJunior/TOP-Memory-Card/assets/108391790/e8dc3b68-1ff6-4ce0-9d0d-f2f0194eacab
+
+
+
 ## Short Description
 A memory card game project to practice using useState, useEffect to fetch, manage and use data from external APIs.
 
 ## Live Demo
-[Demo](https://top-memory-card-ht2pygq8k-bookmanjunior.vercel.app/)
+[Demo](https://top-memory-card-1rvuvhp7s-bookmanjunior.vercel.app/)
 
 ## What I learned
 - Fetch data from external API on component's mount
